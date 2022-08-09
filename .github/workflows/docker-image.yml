@@ -17,4 +17,4 @@ jobs:
     - name: Build the Docker image
       run: docker build . --file Dockerfile --tag oleksandrbondarenko777/identity-server:$(date +%s)
     - name: Docker push
-      run: docker push oleksandrbondarenko777/identity-server:v1
+      run: docker push oleksandrbondarenko777/identity-server
