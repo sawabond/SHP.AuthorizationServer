@@ -9,7 +9,7 @@ namespace IdentityServer
 {
     public class Program
     {
-        public static async Task Main(string[] args)
+        public static void Main(string[] args)
         {
             var build = CreateHostBuilder(args).Build();
 
@@ -22,7 +22,7 @@ namespace IdentityServer
 
                 var seeder = services.GetRequiredService<Seeder>();
 
-                await seeder.Seed();
+                seeder.Seed();
             }
 
             build.Run();
