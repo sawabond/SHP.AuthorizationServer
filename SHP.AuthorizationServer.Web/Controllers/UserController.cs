@@ -180,9 +180,16 @@ namespace IdentityServer.Controllers
         }
 
         [HttpPost("revoke-token")]
-        public async Task<ActionResult> Revoke()
+        public async Task<ActionResult> Revoke([FromQuery] string refreshToken)
         {
-            return Ok();
+            var authResult = await _tokenService.RevokeToken(refreshToken);
+
+            if (!authResult.Success)
+            {
+                return BadRequest(authResult.Errors);
+            }
+
+            return NoContent();
         }
     }
 }

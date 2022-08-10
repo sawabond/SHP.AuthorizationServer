@@ -151,6 +151,27 @@ namespace IdentityServer.Services
             return await CreateToken(user, userRoles, storedRefreshToken);
         }
 
+        public async Task<AuthenticationResult> RevokeToken(string refreshToken)
+        {
+            var storedToken = await _uow.RefreshTokenRepository.FindByToken(refreshToken);
+
+            if (storedToken is null)
+            {
+                return new AuthenticationResult
+                {
+                    Errors = new[] { "There is not such a refresh token" }
+                };
+            }
+
+            _uow.RefreshTokenRepository.Remove(storedToken);
+            await _uow.ConfirmAsync();
+
+            return new AuthenticationResult
+            {
+                Success = true
+            };
+        }
+
         private ClaimsPrincipal GetPrincipalFromToken(string token)
         {
             var tokenHandler = new JwtSecurityTokenHandler();
