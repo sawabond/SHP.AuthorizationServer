@@ -168,6 +168,8 @@ namespace IdentityServer.Controllers
         }
 
         [HttpPost("refresh-token")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<ActionResult<AuthenticationResult>> Refresh([FromBody] RefreshTokenRequest request)
         {
             var authResult = await _tokenService.RefreshToken(request.Token, request.RefreshToken);
@@ -181,6 +183,8 @@ namespace IdentityServer.Controllers
         }
 
         [HttpPost("revoke-token")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<ActionResult> Revoke([FromQuery] string refreshToken)
         {
             var authResult = await _tokenService.RevokeToken(refreshToken);
