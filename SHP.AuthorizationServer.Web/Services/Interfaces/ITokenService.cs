@@ -1,12 +1,14 @@
 ﻿using DAL.Entities;
+using SHP.AuthorizationServer.Web.Contracts;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace IdentityServer.Services.Interfaces
 {
     public interface ITokenService
     {
-        string CreateToken(AppUser user, ICollection<string> roles);
+        Task<AuthenticationResult> CreateToken(AppUser user, ICollection<string> roles, RefreshToken refreshToken=null);
 
-        string RefreshToken(string token, string refreshToken);
+        Task<AuthenticationResult> RefreshToken(string token, string refreshToken);
     }
 }

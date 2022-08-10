@@ -9,6 +9,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SHP.AuthorizationServer.Web
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SHP.AuthorizationServer.IntegrationTests", "SHP.AuthorizationServer.IntegrationTests\SHP.AuthorizationServer.IntegrationTests.csproj", "{CAAF9E4A-C37C-4256-BE09-330DF9782EAF}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SHP.Data", "..\SHP.Data\SHP.Data.csproj", "{9BDF3021-2C63-4D41-ADEB-4468E088A23C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{CAAF9E4A-C37C-4256-BE09-330DF9782EAF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CAAF9E4A-C37C-4256-BE09-330DF9782EAF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CAAF9E4A-C37C-4256-BE09-330DF9782EAF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9BDF3021-2C63-4D41-ADEB-4468E088A23C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9BDF3021-2C63-4D41-ADEB-4468E088A23C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9BDF3021-2C63-4D41-ADEB-4468E088A23C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9BDF3021-2C63-4D41-ADEB-4468E088A23C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

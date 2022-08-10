@@ -10,7 +10,9 @@ using IdentityServerTests.Helpers;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Moq;
+using SHP.AuthorizationServer.Web.Contracts;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Xunit;
 
 namespace SHP.AuthorizationServer.Tests.Controller
@@ -45,7 +47,8 @@ namespace SHP.AuthorizationServer.Tests.Controller
                 new Mock<IAuthService<GoogleOAuthDto>>().Object
             );
 
-            _tokenService.Setup(ut => ut.CreateToken(It.IsAny<AppUser>(), new List<string>())).Returns("Great");
+            _tokenService.Setup(ut => ut.CreateToken(It.IsAny<AppUser>(), new List<string>(), null))
+                .ReturnsAsync(new AuthenticationResult { Success = true });
         }
 
         [Fact]

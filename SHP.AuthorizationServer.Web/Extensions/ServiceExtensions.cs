@@ -66,7 +66,9 @@ namespace IdentityServer.Extensions
                 ValidateIssuerSigningKey = true,
                 IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(config[ConfigurationOptions.Token])),
                 ValidateIssuer = false,
-                ValidateAudience = false
+                ValidateAudience = false,
+                RequireExpirationTime = false,
+                ValidateLifetime = true
             };
 
             services.AddSingleton(tokenValidationParameters);
@@ -76,11 +78,12 @@ namespace IdentityServer.Extensions
                 {
                     options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
                     options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+                    options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
                 })
                 .AddJwtBearer(options =>
                 {
                     options.SaveToken = true;
-                    options.TokenValidationParameters = tokenValidationParameters
+                    options.TokenValidationParameters = tokenValidationParameters;
                 });
 
             return services;

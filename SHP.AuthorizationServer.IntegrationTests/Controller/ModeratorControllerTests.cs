@@ -1,11 +1,14 @@
 using DAL;
 using DAL.Entities;
+using DAL.Interfaces;
 using FluentAssertions;
 using IdentityServer;
 using IdentityServer.Helpers;
 using IdentityServer.Services;
+using IdentityServer.Services.Interfaces;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.IdentityModel.Tokens;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -104,12 +107,15 @@ namespace OnlineShop.IntegrationTests.IdentityServer
 
         #region Helper methods
 
-        private void AddBearerToken()
+        private async void AddBearerToken()
         {
-            var config = _webFactory.Services.GetRequiredService<IConfiguration>();
-            var token = new TokenService(config).CreateToken(User, new[] { Roles.Moder });
+            var tokenService = _webFactory.Services.GetRequiredService<ITokenService>();
+            var authResult = await tokenService.CreateToken(User, new[] { Roles.Moder });
 
-            _httpClient.DefaultRequestHeaders.Add("Authorization", $"Bearer {token}");
+            if (authResult.Success)
+            {
+                _httpClient.DefaultRequestHeaders.Add("Authorization", $"Bearer {authResult.Token}");
+            }
         }
 
         private async Task PrepareDb()
