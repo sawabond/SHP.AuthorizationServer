@@ -30,13 +30,15 @@ namespace SHP.AuthorizationServer.Tests.Controller
         {
             _mapper = new Mock<IMapper>();
             _tokenService = new Mock<ITokenService>();
+            _tokenService.Setup(t => t.CreateToken(
+                It.IsAny<AppUser>(), It.IsAny<ICollection<string>>(), It.IsAny<RefreshToken>()))
+                .ReturnsAsync(new AuthenticationResult { Success = true });
 
             _uow = new Mock<IUnitOfWork>();
             _mockUserRepository = new Mock<IUserRepository>();
             _mockSignInManager = new Mock<ISignInManager>();
 
             _uow.SetupGet(u => u.UserRepository).Returns(_mockUserRepository.Object);
-
             _uow.SetupGet(u => u.SignInManager).Returns(_mockSignInManager.Object);
 
 
