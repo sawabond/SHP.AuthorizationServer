@@ -9,6 +9,7 @@ using IdentityServer.Services.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using SHP.AuthorizationServer.Web.Contracts;
+using SHP.AuthorizationServer.Web.DTO;
 using System;
 using System.Threading.Tasks;
 

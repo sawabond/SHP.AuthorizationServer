@@ -1,4 +1,4 @@
-﻿namespace IdentityServer.Controllers
+﻿namespace SHP.AuthorizationServer.Web.DTO
 {
     public class RefreshTokenRequest
     {
