@@ -61,6 +61,16 @@ namespace IdentityServer.Extensions
 
         public static IServiceCollection AddBearerAuthentication(this IServiceCollection services, IConfiguration config)
         {
+            var tokenValidationParameters = new TokenValidationParameters
+            {
+                ValidateIssuerSigningKey = true,
+                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(config[ConfigurationOptions.Token])),
+                ValidateIssuer = false,
+                ValidateAudience = false
+            };
+
+            services.AddSingleton(tokenValidationParameters);
+
             services
                 .AddAuthentication(options =>
                 {
@@ -70,13 +80,7 @@ namespace IdentityServer.Extensions
                 .AddJwtBearer(options =>
                 {
                     options.SaveToken = true;
-                    options.TokenValidationParameters = new TokenValidationParameters
-                    {
-                        ValidateIssuerSigningKey = true,
-                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(config[ConfigurationOptions.Token])),
-                        ValidateIssuer = false,
-                        ValidateAudience = false
-                    };
+                    options.TokenValidationParameters = tokenValidationParameters
                 });
 
             return services;

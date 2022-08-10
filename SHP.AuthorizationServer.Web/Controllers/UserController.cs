@@ -133,6 +133,14 @@ namespace IdentityServer.Controllers
             return Ok(userDto);
         }
 
+        [HttpPost]
+        public async Task<ActionResult> Refresh([FromBody] RefreshTokenRequest request)
+        {
+            _tokenService.RefreshToken(request.Token, request.RefreshToken);
+
+            return Ok();
+        }
+
         [HttpPost("revoke-token")]
         public async Task<ActionResult> Revoke()
         {

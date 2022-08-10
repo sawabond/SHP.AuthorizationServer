@@ -14,13 +14,13 @@ namespace IdentityServer.Services
     public class TokenService : ITokenService
     {
         private readonly IConfiguration _config;
+        private readonly TokenValidationParameters _tokenValidationParameters;
         private readonly SymmetricSecurityKey _key;
 
-        const double HoursOfTokenExpiration = 12;
-
-        public TokenService(IConfiguration configuration)
+        public TokenService(IConfiguration configuration, TokenValidationParameters tokenValidationParameters)
         {
             _config = configuration;
+            _tokenValidationParameters = tokenValidationParameters;
             _key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config[ConfigurationOptions.Token]));
         }
 
@@ -43,7 +43,7 @@ namespace IdentityServer.Services
             var tokenDescriptor = new SecurityTokenDescriptor
             {
                 Subject = new ClaimsIdentity(claims),
-                Expires = DateTime.Now.AddHours(HoursOfTokenExpiration),
+                Expires = DateTime.Now.AddMinutes(1),
                 SigningCredentials = creds
             };
 
@@ -52,6 +52,26 @@ namespace IdentityServer.Services
             var token = tokenHandler.CreateToken(tokenDescriptor);
 
             return tokenHandler.WriteToken(token);
+        }
+
+        public string RefreshToken(string token, string refreshToken)
+        {
+            throw new NotImplementedException();
+        }
+
+        private ClaimsPrincipal GetPrincipalFromToken(string token)
+        {
+            var tokenHandler = new JwtSecurityTokenHandler();
+
+            try
+            {
+                var principal = tokenHandler.ValidateToken(token, _tokenValidationParameters, out var validatedToken);
+                return new ClaimsPrincipal();
+            }
+            catch
+            {
+                return null;
+            }
         }
     }
 }
