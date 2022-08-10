@@ -3,8 +3,11 @@ using DAL.Interfaces;
 using IdentityServer.Options;
 using IdentityServer.Services.Interfaces;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using SHP.AuthorizationServer.Web.Contracts;
+using SHP.AuthorizationServer.Web.Extensions;
+using SHP.AuthorizationServer.Web.Options;
 using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
@@ -21,16 +24,19 @@ namespace IdentityServer.Services
         private readonly TokenValidationParameters _tokenValidationParameters;
         private readonly IUnitOfWork _uow;
         private readonly SymmetricSecurityKey _key;
+        private readonly JwtOptions _jwtOptions;
 
         public TokenService(
             IConfiguration configuration,
+            IOptions<JwtOptions> jwtOptions,
             TokenValidationParameters tokenValidationParameters,
             IUnitOfWork uow)
         {
             _config = configuration;
+            _jwtOptions = jwtOptions.Value;
             _tokenValidationParameters = tokenValidationParameters;
             _uow = uow;
-            _key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config[ConfigurationOptions.Token]));
+            _key = new SymmetricSecurityKey(_jwtOptions.TokenKey.ToByteArray());
         }
 
         public async Task<AuthenticationResult> CreateToken(
@@ -56,7 +62,7 @@ namespace IdentityServer.Services
             var tokenDescriptor = new SecurityTokenDescriptor
             {
                 Subject = new ClaimsIdentity(claims),
-                Expires = DateTime.UtcNow.AddMinutes(1),
+                Expires = DateTime.UtcNow.Add(_jwtOptions.TokenLifetime),
                 SigningCredentials = creds
             };
 
@@ -72,7 +78,7 @@ namespace IdentityServer.Services
                     JwtId = token.Id,
                     UserId = user.Id,
                     CreationDate = DateTime.UtcNow,
-                    ExpiryDate = DateTime.UtcNow.AddMonths(6)
+                    ExpiryDate = DateTime.UtcNow.AddMonths(_jwtOptions.RefreshTokenExpirationMonths)
                 };
 
                 await _uow.RefreshTokenRepository.AddAsync(refreshToken);

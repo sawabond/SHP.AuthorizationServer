@@ -11,8 +11,11 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using SHP.AuthorizationServer.Web.Extensions;
+using SHP.AuthorizationServer.Web.Options;
 using Swashbuckle.AspNetCore.Filters;
 using System.Text;
 
@@ -59,12 +62,14 @@ namespace IdentityServer.Extensions
             return services;
         }
 
-        public static IServiceCollection AddBearerAuthentication(this IServiceCollection services, IConfiguration config)
+        public static IServiceCollection AddBearerAuthentication(this IServiceCollection services)
         {
+            var jwtOptions = services.BuildServiceProvider().GetRequiredService<IOptions<JwtOptions>>().Value;
+
             var tokenValidationParameters = new TokenValidationParameters
             {
                 ValidateIssuerSigningKey = true,
-                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(config[ConfigurationOptions.Token])),
+                IssuerSigningKey = new SymmetricSecurityKey(jwtOptions.TokenKey.ToByteArray()),
                 ValidateIssuer = false,
                 ValidateAudience = false,
                 RequireExpirationTime = false,
