@@ -8,6 +8,8 @@ using IdentityServer.Extensions;
 using IdentityServer.Services.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using SHP.AuthorizationServer.Web.Contracts;
+using SHP.AuthorizationServer.Web.DTO;
 using System;
 using System.Threading.Tasks;
 
@@ -61,8 +63,15 @@ namespace IdentityServer.Controllers
             var roles = await _uow.UserRepository.GetUserRoles(newUser);
 
             var userDto = _mapper.Map<UserDto>(newUser);
-            var token = _tokenService.CreateToken(newUser, roles);
-            userDto.Token = token;
+            var authResult = await _tokenService.CreateToken(newUser, roles);
+
+            if (!authResult.Success)
+            {
+                return Unauthorized();
+            }
+
+            userDto.Token = authResult.Token;
+            userDto.RefreshToken = authResult.RefreshToken;
 
             return Ok(userDto);
         }
@@ -89,7 +98,15 @@ namespace IdentityServer.Controllers
 
             var roles = await _uow.UserRepository.GetUserRoles(user);
             var userDto = _mapper.Map<UserDto>(user);
-            userDto.Token = _tokenService.CreateToken(user, roles);
+            var authResult = await _tokenService.CreateToken(user, roles);
+
+            if (!authResult.Success)
+            {
+                return Unauthorized();
+            }
+
+            userDto.Token = authResult.Token;
+            userDto.RefreshToken = authResult.RefreshToken;
 
             return Ok(userDto);
         }
@@ -103,11 +120,20 @@ namespace IdentityServer.Controllers
             var user = await _uow.UserRepository.GetUserByEmailAsync(oAuthDto.Email);
 
             UserDto userDto;
+            AuthenticationResult authResult;
 
             if (user != null)
             {
                 userDto = _mapper.Map<UserDto>(user);
-                userDto.Token = _tokenService.CreateToken(user, await _uow.UserRepository.GetUserRoles(user));
+                authResult = await _tokenService.CreateToken(user, await _uow.UserRepository.GetUserRoles(user));
+
+                if (!authResult.Success)
+                {
+                    return Unauthorized();
+                }
+
+                userDto.Token = authResult.Token;
+                userDto.RefreshToken = authResult.RefreshToken;
 
                 return Ok(userDto);
             }
@@ -128,15 +154,47 @@ namespace IdentityServer.Controllers
             await _uow.UserRepository.AddToRoleAsync(newUser, "buyer");
             userDto = _mapper.Map<UserDto>(newUser);
 
-            userDto.Token = _tokenService.CreateToken(newUser, await _uow.UserRepository.GetUserRoles(newUser));
+            authResult = await _tokenService.CreateToken(newUser, await _uow.UserRepository.GetUserRoles(newUser));
+
+            if (!authResult.Success)
+            {
+                return Unauthorized();
+            }
+
+            userDto.Token = authResult.Token;
+            userDto.RefreshToken = authResult.RefreshToken;
 
             return Ok(userDto);
         }
 
-        [HttpPost("revoke-token")]
-        public async Task<ActionResult> Revoke()
+        [HttpPost("refresh-token")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<ActionResult<AuthenticationResult>> Refresh([FromBody] RefreshTokenRequest request)
         {
-            return Ok();
+            var authResult = await _tokenService.RefreshToken(request.Token, request.RefreshToken);
+
+            if (!authResult.Success)
+            {
+                return BadRequest(authResult.Errors);
+            }
+
+            return Ok(authResult);
+        }
+
+        [HttpPost("revoke-token")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<ActionResult> Revoke([FromQuery] string refreshToken)
+        {
+            var authResult = await _tokenService.RevokeToken(refreshToken);
+
+            if (!authResult.Success)
+            {
+                return BadRequest(authResult.Errors);
+            }
+
+            return NoContent();
         }
     }
 }

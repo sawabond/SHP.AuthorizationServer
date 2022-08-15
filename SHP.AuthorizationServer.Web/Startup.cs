@@ -9,6 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using SHP.AuthorizationServer.Web.Options;
 
 namespace IdentityServer
 {
@@ -44,7 +45,9 @@ namespace IdentityServer
             services.AddControllers();
             services.AddOAuthServices();
 
-            services.AddBearerAuthentication(Configuration);
+            services.AddOptions<JwtOptions>().Bind(Configuration.GetSection(JwtOptions.Jwt));
+
+            services.AddBearerAuthentication();
 
             services.AddSwagger();
         }

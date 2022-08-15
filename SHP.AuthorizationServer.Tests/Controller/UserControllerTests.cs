@@ -10,7 +10,9 @@ using IdentityServerTests.Helpers;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Moq;
+using SHP.AuthorizationServer.Web.Contracts;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Xunit;
 
 namespace SHP.AuthorizationServer.Tests.Controller
@@ -28,13 +30,15 @@ namespace SHP.AuthorizationServer.Tests.Controller
         {
             _mapper = new Mock<IMapper>();
             _tokenService = new Mock<ITokenService>();
+            _tokenService.Setup(t => t.CreateToken(
+                It.IsAny<AppUser>(), It.IsAny<ICollection<string>>(), It.IsAny<RefreshToken>()))
+                .ReturnsAsync(new AuthenticationResult { Success = true });
 
             _uow = new Mock<IUnitOfWork>();
             _mockUserRepository = new Mock<IUserRepository>();
             _mockSignInManager = new Mock<ISignInManager>();
 
             _uow.SetupGet(u => u.UserRepository).Returns(_mockUserRepository.Object);
-
             _uow.SetupGet(u => u.SignInManager).Returns(_mockSignInManager.Object);
 
 
@@ -45,7 +49,8 @@ namespace SHP.AuthorizationServer.Tests.Controller
                 new Mock<IAuthService<GoogleOAuthDto>>().Object
             );
 
-            _tokenService.Setup(ut => ut.CreateToken(It.IsAny<AppUser>(), new List<string>())).Returns("Great");
+            _tokenService.Setup(ut => ut.CreateToken(It.IsAny<AppUser>(), new List<string>(), null))
+                .ReturnsAsync(new AuthenticationResult { Success = true });
         }
 
         [Fact]

@@ -3,8 +3,7 @@ using DAL.Entities;
 using FluentAssertions;
 using IdentityServer;
 using IdentityServer.Helpers;
-using IdentityServer.Services;
-using Microsoft.Extensions.Configuration;
+using IdentityServer.Services.Interfaces;
 using Microsoft.Extensions.DependencyInjection;
 using System.Net;
 using System.Net.Http;
@@ -44,7 +43,7 @@ namespace OnlineShop.IntegrationTests.IdentityServer
         [Fact]
         public async void Get_ShouldReturnOk_WhenUsersFound()
         {
-            AddBearerToken();
+            await AddBearerToken();
             ClearDb();
             await PrepareDb();
 
@@ -55,7 +54,7 @@ namespace OnlineShop.IntegrationTests.IdentityServer
         [Fact]
         public async void Get_ShouldReturnNoContent_WhenUsersNotFound()
         {
-            AddBearerToken();
+            await AddBearerToken();
             ClearDb();
 
             var response = await _httpClient.GetAsync(DefaultRoute);
@@ -69,7 +68,7 @@ namespace OnlineShop.IntegrationTests.IdentityServer
         [Fact]
         public async void Delete_ShouldReturnNoContent_WhenUserNotFound()
         {
-            AddBearerToken();
+            await AddBearerToken();
             await PrepareDb();
 
             var response = await _httpClient.DeleteAsync($"{DefaultRoute}/-1");
@@ -81,7 +80,7 @@ namespace OnlineShop.IntegrationTests.IdentityServer
         [InlineData(2)]
         public async void Delete_ShouldReturnBadRequest_WhenUserHasSiteManagingRole(int id)
         {
-            AddBearerToken();
+            await AddBearerToken();
             await PrepareDb();
 
             var response = await _httpClient.DeleteAsync($"{DefaultRoute}/{id}");
@@ -93,7 +92,7 @@ namespace OnlineShop.IntegrationTests.IdentityServer
         [InlineData(4)]
         public async void Delete_ShouldReturnOk_WhenUserSuccessfullyDeleted(int id)
         {
-            AddBearerToken();
+            await AddBearerToken();
             await PrepareDb();
 
             var response = await _httpClient.DeleteAsync($"{DefaultRoute}/{id}");
@@ -104,12 +103,18 @@ namespace OnlineShop.IntegrationTests.IdentityServer
 
         #region Helper methods
 
-        private void AddBearerToken()
+        private async Task AddBearerToken()
         {
-            var config = _webFactory.Services.GetRequiredService<IConfiguration>();
-            var token = new TokenService(config).CreateToken(User, new[] { Roles.Moder });
+            var scope = _webFactory.Services.CreateScope();
+            var tokenService = scope.ServiceProvider.GetRequiredService<ITokenService>();
+            var authResult = await tokenService.CreateToken(User, new[] { Roles.Moder }, null);
 
-            _httpClient.DefaultRequestHeaders.Add("Authorization", $"Bearer {token}");
+            if (!authResult.Success)
+            {
+                return;
+            }
+
+            _httpClient.DefaultRequestHeaders.Add("Authorization", $"Bearer {authResult.Token}");
         }
 
         private async Task PrepareDb()
