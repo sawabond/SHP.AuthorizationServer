@@ -1,25 +1,21 @@
 ﻿using AutoMapper;
 using DAL;
 using DAL.Entities;
-using IdentityServer.DTO.Google;
-using IdentityServer.Helpers;
-using IdentityServer.Mapping;
-using IdentityServer.Options;
-using IdentityServer.Services;
-using IdentityServer.Services.Interfaces;
+using SHP.AuthorizationServer.Web.DTO.Auth.Google;
+using SHP.AuthorizationServer.Web.Helpers;
+using SHP.AuthorizationServer.Web.Mapping;
+using SHP.AuthorizationServer.Web.Options;
+using SHP.AuthorizationServer.Web.Services;
+using SHP.AuthorizationServer.Web.Services.Interfaces;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
-using SHP.AuthorizationServer.Web.Extensions;
-using SHP.AuthorizationServer.Web.Options;
 using Swashbuckle.AspNetCore.Filters;
-using System.Text;
 
-namespace IdentityServer.Extensions
+namespace SHP.AuthorizationServer.Web.Extensions
 {
     public static class ServiceExtensions
     {

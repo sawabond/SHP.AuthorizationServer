@@ -1,4 +1,4 @@
-﻿namespace IdentityServer.Constants
+﻿namespace SHP.AuthorizationServer.Web.Constants
 {
     public static class UserDefaultConstants
     {

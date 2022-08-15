@@ -4,7 +4,7 @@ using System;
 using System.Text.Json;
 using System.Threading.Tasks;
 
-namespace IdentityServer.Middlewares
+namespace SHP.AuthorizationServer.Web.Middlewares
 {
     public class ValidationHandlerMiddleware
     {

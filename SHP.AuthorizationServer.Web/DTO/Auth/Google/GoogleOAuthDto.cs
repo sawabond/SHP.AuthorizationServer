@@ -1,6 +1,4 @@
-﻿using IdentityServer.DTO.Auth;
-
-namespace IdentityServer.DTO.Google
+﻿namespace SHP.AuthorizationServer.Web.DTO.Auth.Google
 {
     public class GoogleOAuthDto : AuthDtoBase
     {

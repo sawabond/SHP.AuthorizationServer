@@ -1,4 +1,4 @@
-﻿namespace IdentityServer.DTO
+﻿namespace SHP.AuthorizationServer.Web.DTO
 {
     public class UserRegisterDto
     {

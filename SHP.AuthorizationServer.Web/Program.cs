@@ -1,11 +1,11 @@
 using DAL;
-using IdentityServer.Helpers;
+using SHP.AuthorizationServer.Web.Helpers;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System.Threading.Tasks;
 
-namespace IdentityServer
+namespace SHP.AuthorizationServer.Web
 {
     public class Program
     {

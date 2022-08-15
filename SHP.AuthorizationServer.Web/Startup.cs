@@ -1,17 +1,16 @@
 using DAL;
 using DAL.Interfaces;
-using IdentityServer.Extensions;
-using IdentityServer.Middlewares;
-using IdentityServer.Options;
+using SHP.AuthorizationServer.Web.Extensions;
+using SHP.AuthorizationServer.Web.Middlewares;
+using SHP.AuthorizationServer.Web.Options;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using SHP.AuthorizationServer.Web.Options;
 
-namespace IdentityServer
+namespace SHP.AuthorizationServer.Web
 {
     public class Startup
     {

@@ -1,4 +1,4 @@
-﻿namespace IdentityServer
+﻿namespace SHP.AuthorizationServer.Web
 {
     public static class Roles
     {

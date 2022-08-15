@@ -1,4 +1,4 @@
-﻿namespace IdentityServer.Options
+﻿namespace SHP.AuthorizationServer.Web.Options
 {
     public static class ConfigurationOptions
     {
