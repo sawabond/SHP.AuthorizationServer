@@ -1,6 +1,6 @@
-﻿using IdentityServer.DTO.Auth;
+﻿using SHP.AuthorizationServer.Web.DTO.Auth;
 
-namespace IdentityServer.Services.Interfaces
+namespace SHP.AuthorizationServer.Web.Services.Interfaces
 {
     public interface IAuthService<TAuthDto> where TAuthDto : AuthDtoBase
     {

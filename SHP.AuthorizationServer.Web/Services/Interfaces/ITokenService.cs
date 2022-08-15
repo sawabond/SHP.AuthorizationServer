@@ -3,7 +3,7 @@ using SHP.AuthorizationServer.Web.Contracts;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace IdentityServer.Services.Interfaces
+namespace SHP.AuthorizationServer.Web.Services.Interfaces
 {
     public interface ITokenService
     {

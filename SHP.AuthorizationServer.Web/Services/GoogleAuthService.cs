@@ -1,9 +1,9 @@
-﻿using IdentityServer.DTO.Google;
-using IdentityServer.Services.Interfaces;
+﻿using SHP.AuthorizationServer.Web.DTO.Auth.Google;
+using SHP.AuthorizationServer.Web.Services.Interfaces;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 
-namespace IdentityServer.Services
+namespace SHP.AuthorizationServer.Web.Services
 {
     public class GoogleAuthService : IAuthService<GoogleOAuthDto>
     {

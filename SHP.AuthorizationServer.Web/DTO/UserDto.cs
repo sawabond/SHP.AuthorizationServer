@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace IdentityServer.DTO
+namespace SHP.AuthorizationServer.Web.DTO
 {
     public class UserDto
     {

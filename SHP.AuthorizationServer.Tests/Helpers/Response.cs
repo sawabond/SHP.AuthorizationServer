@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 
-namespace IdentityServerTests.Helpers
+namespace SHP.AuthorizationServer.Tests.Helpers
 {
     internal class Response<TValue>
     {

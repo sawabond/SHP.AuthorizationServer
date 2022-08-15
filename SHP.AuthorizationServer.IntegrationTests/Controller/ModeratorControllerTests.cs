@@ -1,16 +1,16 @@
 using DAL;
 using DAL.Entities;
 using FluentAssertions;
-using IdentityServer;
-using IdentityServer.Helpers;
-using IdentityServer.Services.Interfaces;
 using Microsoft.Extensions.DependencyInjection;
+using SHP.AuthorizationServer.Web;
+using SHP.AuthorizationServer.Web.Helpers;
+using SHP.AuthorizationServer.Web.Services.Interfaces;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace OnlineShop.IntegrationTests.IdentityServer
+namespace SHP.AuthorizationServer.IntegrationTests.Controller
 {
     public class ModeratorControllerTests
     {

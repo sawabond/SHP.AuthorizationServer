@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using System.Linq;
 
-namespace IdentityServer.Extensions
+namespace SHP.AuthorizationServer.Web.Extensions
 {
     public static class IdentityResultExtensions
     {

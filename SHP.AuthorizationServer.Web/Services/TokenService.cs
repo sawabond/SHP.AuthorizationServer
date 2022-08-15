@@ -1,22 +1,20 @@
 ﻿using DAL.Entities;
 using DAL.Interfaces;
-using IdentityServer.Options;
-using IdentityServer.Services.Interfaces;
+using SHP.AuthorizationServer.Web.Options;
+using SHP.AuthorizationServer.Web.Services.Interfaces;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using SHP.AuthorizationServer.Web.Contracts;
 using SHP.AuthorizationServer.Web.Extensions;
-using SHP.AuthorizationServer.Web.Options;
 using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Security.Claims;
-using System.Text;
 using System.Threading.Tasks;
 
-namespace IdentityServer.Services
+namespace SHP.AuthorizationServer.Web.Services
 {
     public class TokenService : ITokenService
     {

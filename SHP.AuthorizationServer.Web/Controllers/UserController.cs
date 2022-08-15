@@ -1,19 +1,18 @@
 ﻿using AutoMapper;
 using DAL.Entities;
 using DAL.Interfaces;
-using IdentityServer.Constants;
-using IdentityServer.DTO;
-using IdentityServer.DTO.Google;
-using IdentityServer.Extensions;
-using IdentityServer.Services.Interfaces;
+using SHP.AuthorizationServer.Web.Constants;
+using SHP.AuthorizationServer.Web.DTO;
+using SHP.AuthorizationServer.Web.DTO.Auth.Google;
+using SHP.AuthorizationServer.Web.Extensions;
+using SHP.AuthorizationServer.Web.Services.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using SHP.AuthorizationServer.Web.Contracts;
-using SHP.AuthorizationServer.Web.DTO;
 using System;
 using System.Threading.Tasks;
 
-namespace IdentityServer.Controllers
+namespace SHP.AuthorizationServer.Web.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]

@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 
-namespace IdentityServer.Helpers.Interfaces
+namespace SHP.AuthorizationServer.Web.Helpers.Interfaces
 {
     public interface ISeeder
     {

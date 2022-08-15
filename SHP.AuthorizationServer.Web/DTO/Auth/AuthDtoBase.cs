@@ -1,4 +1,4 @@
-﻿namespace IdentityServer.DTO.Auth
+﻿namespace SHP.AuthorizationServer.Web.DTO.Auth
 {
     public abstract class AuthDtoBase
     {

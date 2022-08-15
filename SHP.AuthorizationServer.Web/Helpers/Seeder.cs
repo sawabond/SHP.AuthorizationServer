@@ -1,11 +1,11 @@
 ﻿using DAL.Entities;
-using IdentityServer.Helpers.Interfaces;
+using SHP.AuthorizationServer.Web.Helpers.Interfaces;
 using Microsoft.AspNetCore.Identity;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace IdentityServer.Helpers
+namespace SHP.AuthorizationServer.Web.Helpers
 {
     public class Seeder : ISeeder
     {

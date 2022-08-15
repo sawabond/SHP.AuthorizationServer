@@ -2,17 +2,16 @@
 using DAL.Entities;
 using DAL.Interfaces;
 using FluentAssertions;
-using IdentityServer.Controllers;
-using IdentityServer.DTO;
-using IdentityServer.DTO.Google;
-using IdentityServer.Services.Interfaces;
-using IdentityServerTests.Helpers;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Moq;
+using SHP.AuthorizationServer.Tests.Helpers;
 using SHP.AuthorizationServer.Web.Contracts;
+using SHP.AuthorizationServer.Web.Controllers;
+using SHP.AuthorizationServer.Web.DTO;
+using SHP.AuthorizationServer.Web.DTO.Auth.Google;
+using SHP.AuthorizationServer.Web.Services.Interfaces;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 using Xunit;
 
 namespace SHP.AuthorizationServer.Tests.Controller

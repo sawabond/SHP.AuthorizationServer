@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
 using DAL.Entities;
-using IdentityServer.DTO;
+using SHP.AuthorizationServer.Web.DTO;
 
-namespace IdentityServer.Mapping
+namespace SHP.AuthorizationServer.Web.Mapping
 {
     public class MappingProfile : Profile
     {
