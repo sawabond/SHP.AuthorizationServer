@@ -183,7 +183,7 @@ namespace IdentityServer.Controllers
         }
 
         [HttpPost("revoke-token")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<ActionResult> Revoke([FromQuery] string refreshToken)
         {
